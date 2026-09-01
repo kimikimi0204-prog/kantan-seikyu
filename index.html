@@ -1,4 +1,4 @@
-<!-- かんたん請求管理 Ver.1.4 / 2026-09-01 -->
+<!-- かんたん請求管理 Ver.1.6 / 2026-09-01 -->
 <!doctype html>
 <html lang="ja">
 <head>
@@ -12,6 +12,27 @@ header{position:sticky;top:0;z-index:5;background:#111827;color:#fff;padding:14p
 #pdfArea{position:absolute;left:-100000px;top:0;width:210mm;background:#fff;color:#000}.invoice-page{width:210mm;height:297mm;padding:12mm 12mm 10mm;background:#fff;page-break-after:always;position:relative}.invoice-page:last-child{page-break-after:auto}.inv-title{text-align:center;font-size:24px;font-weight:700;letter-spacing:.18em;margin:0 0 4mm}.inv-head{display:grid;grid-template-columns:1.4fr 1fr;gap:8mm;align-items:start}.inv-to{font-size:18px;border-bottom:2px solid #000;padding-bottom:2mm;margin-top:8mm}.inv-from{font-size:12px;line-height:1.55}.inv-date{text-align:right;font-size:11px}.inv-total{font-size:18px;font-weight:700;margin:7mm 0 4mm;border-bottom:3px solid #000;padding:0 4mm 2mm}.inv-table{width:100%;border-collapse:collapse;font-size:9.2px;table-layout:fixed}.inv-table th,.inv-table td{border:1px solid #000;padding:1.3mm 1.5mm;vertical-align:middle}.inv-table th{background:#e5e7eb}.inv-table td.num{text-align:right;font-variant-numeric:tabular-nums}.inv-table .datecol{width:15mm}.inv-table .desccol{width:auto}.inv-table .qtycol{width:12mm}.inv-table .unitcol{width:12mm}.inv-table .pricecol{width:24mm}.inv-table .amountcol{width:24mm}.inv-foot{margin-top:4mm}.calc{width:100%;border-collapse:collapse;font-size:10px}.calc td{border:1px solid #000;padding:1.8mm}.calc td:first-child{background:#f3f4f6}.calc td:last-child{text-align:right;width:30mm}.calc .discount td{background:#eef2ff}.bank{margin-top:3mm;border:1px solid #000;padding:2.5mm;font-size:9.5px;line-height:1.5}.bank-title{font-weight:700;text-align:center;margin-bottom:1mm}.inv-note{text-align:center;font-size:9px;margin-top:2mm;font-weight:700}.page-no{position:absolute;bottom:5mm;right:12mm;font-size:9px;color:#555}.cont-title{font-size:16px;font-weight:700;margin-bottom:3mm}
 
 .date-row{display:flex;gap:10px;align-items:center}.date-row input{flex:1}.date-change-btn{white-space:nowrap}.date-chooser{margin-top:10px;padding:12px;border:1px solid #d8dee8;border-radius:10px;background:#f8fafc}.date-selects{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.date-selects select{width:auto;min-width:76px;margin:0}.date-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn.secondary{background:#64748b}.btn.secondary:hover{background:#475569}@media(max-width:640px){.date-row{align-items:stretch}.date-row input{min-width:0}.date-change-btn{padding-left:12px;padding-right:12px}.date-selects select{min-width:70px;flex:1}.date-actions .btn{flex:1}}
+
+/* iPhone / iPad PDF preview */
+#iosPrintPreview{position:fixed;inset:0;z-index:9999;background:#eef2f7;overflow:auto;-webkit-overflow-scrolling:touch;padding:0 0 28px}
+.ios-preview-toolbar{position:sticky;top:0;z-index:10000;background:#111827;color:#fff;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.ios-preview-toolbar-inner{max-width:760px;margin:auto}
+.ios-preview-toolbar strong{display:block;font-size:16px;margin-bottom:6px}.ios-preview-toolbar p{font-size:12px;line-height:1.5;margin:0 0 9px;color:#e5e7eb}
+.ios-preview-actions{display:grid;grid-template-columns:1fr auto;gap:8px}.ios-preview-actions button{border-radius:9px}.ios-print-btn{background:#2563eb;color:#fff}.ios-close-btn{background:#e5e7eb;color:#111827}
+#iosPrintArea{width:210mm;margin:14px auto;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+#iosPrintArea .invoice-page{margin:0!important;box-shadow:none!important}
+@media(max-width:850px){#iosPrintArea{margin:10px 0;transform-origin:top left}.ios-preview-toolbar{padding-top:max(12px,env(safe-area-inset-top))}}
+@media print{
+  @page{size:A4;margin:0}
+  body.ios-printing{background:#fff!important}
+  body.ios-printing header,body.ios-printing main,body.ios-printing>#pdfArea{display:none!important}
+  body.ios-printing #iosPrintPreview{display:block!important;position:static!important;inset:auto!important;overflow:visible!important;background:#fff!important;padding:0!important}
+  body.ios-printing #iosPrintPreview .ios-preview-toolbar{display:none!important}
+  body.ios-printing #iosPrintArea{display:block!important;position:static!important;width:210mm!important;margin:0!important;box-shadow:none!important;transform:none!important}
+  body.ios-printing #iosPrintArea .invoice-page{width:210mm!important;height:297mm!important;margin:0!important;page-break-after:always!important;break-after:page!important}
+  body.ios-printing #iosPrintArea .invoice-page:last-child{page-break-after:auto!important;break-after:auto!important}
+}
+
 </style>
 </head>
 <body>
@@ -24,6 +45,20 @@ header{position:sticky;top:0;z-index:5;background:#111827;color:#fff;padding:14p
 <div class="card"><h2>取引先</h2><div id="clientList"></div><hr><label>取引先名</label><input id="newClientName" placeholder="例：株式会社〇〇"><label>敬称</label><select id="newClientHonorific"><option value="御中">御中</option><option value="様">様</option></select><label>値引率（%）</label><input id="newClientDiscount" type="number" step="0.1" value="2"><button class="btn2 big" onclick="addClient()">取引先を追加</button></div>
 <div class="card"><h2>バックアップ</h2><p class="muted">スマホ変更やブラウザデータ削除に備えて、定期的なバックアップをおすすめします。</p><div class="grid2"><button class="btnOk" onclick="exportBackup()">バックアップを保存</button><button class="btn2" onclick="document.getElementById('importFile').click()">バックアップから復元</button></div><input id="importFile" type="file" accept=".json,application/json" class="hidden" onchange="importBackup(event)"></div></section>
 </main><div id="pdfArea"></div>
+<div id="iosPrintPreview" class="hidden" aria-hidden="true">
+  <div class="ios-preview-toolbar">
+    <div class="ios-preview-toolbar-inner">
+      <strong>iPhone用 請求書プレビュー</strong>
+      <p>下に請求書が見えていることを確認してから「PDF保存・印刷」を押してください。印刷画面では共有ボタンから「ファイルに保存」もできます。</p>
+      <div class="ios-preview-actions">
+        <button type="button" class="ios-print-btn" onclick="printIOSInvoice()">PDF保存・印刷</button>
+        <button type="button" class="ios-close-btn" onclick="closeIOSPreview()">戻る</button>
+      </div>
+    </div>
+  </div>
+  <div id="iosPrintArea"></div>
+</div>
+
 <script>
 const KEY="kantanSeikyuData_v1";function defaultData(){return{settings:{company:"",rep:"",zip:"",address:"",tel:"",bank:"",branch:"",accountType:"普通",accountNo:"",accountName:"",taxRate:10,defaultDiscount:2},clients:[],works:[]}}function loadData(){try{const d=JSON.parse(localStorage.getItem(KEY));if(!(d&&d.settings&&Array.isArray(d.clients)&&Array.isArray(d.works)))return defaultData();const base=defaultData();return{settings:{...base.settings,...d.settings},clients:d.clients,works:d.works}}catch(e){return defaultData()}}let data=loadData();function persist(){localStorage.setItem(KEY,JSON.stringify(data))}function yen(n){return"¥"+Math.round(Number(n)||0).toLocaleString("ja-JP")}function num(n){return Math.round(Number(n)||0).toLocaleString("ja-JP")}function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}function localYmd(){const d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return`${y}-${m}-${day}`}function todayStr(){return localYmd()}function monthStr(){return localYmd().slice(0,7)}
 function showPage(name){["entry","history","settings"].forEach(p=>document.getElementById("page-"+p).classList.add("hidden"));document.getElementById("page-"+name).classList.remove("hidden");["entry","history"].forEach(p=>{const el=document.getElementById("nav-"+p);if(el)el.classList.toggle("active",p===name)});if(name==="settings")renderSettings();if(name==="history")renderHistory()}
@@ -40,7 +75,33 @@ function editClient(id){const c=clientById(id);if(!c)return;const name=prompt("�
 function calcInvoice(ws,client){const taxRate=Number(data.settings.taxRate)||10;const lines=ws.map(w=>({...w,net:Math.round(w.gross/(1+taxRate/100))}));const subtotal=lines.reduce((s,w)=>s+w.net,0),discountRate=Number(client.discountRate)||0,discount=Math.round(subtotal*discountRate/100),tax=Math.round(subtotal*taxRate/100),total=subtotal-discount+tax;return{lines,subtotal,discountRate,discount,taxRate,tax,total}}
 function invoicePages(lines){const firstCap=20,nextCap=28,pages=[];let i=0;pages.push(lines.slice(i,i+firstCap));i+=firstCap;while(i<lines.length){pages.push(lines.slice(i,i+nextCap));i+=nextCap}return pages}function rowHtml(w){const d=new Date(w.date+"T00:00:00"),md=`${d.getMonth()+1}/${d.getDate()}`;return`<tr><td>${md}</td><td>${esc(w.desc)}</td><td class="num">1</td><td>式</td><td class="num">${num(w.net)}</td><td class="num">${num(w.net)}</td></tr>`}
 function setPdfMsg(message,type="notice"){const el=document.getElementById("pdfMsg");el.className=(type==="success"?"success":"notice");el.textContent=message;el.classList.remove("hidden")}
+function isIOSDevice(){return /iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)}
+function fitIOSPreview(){
+  const box=document.getElementById("iosPrintArea");if(!box)return;
+  box.style.transform="";box.style.marginBottom="";
+  if(window.innerWidth<850){const natural=box.scrollWidth||794;const scale=Math.min(1,(window.innerWidth-12)/natural);box.style.transform=`scale(${scale})`;box.style.marginBottom=`-${Math.max(0,box.scrollHeight*(1-scale))}px`;}
+}
+function showIOSPreview(area,filename){
+  const preview=document.getElementById("iosPrintPreview"),target=document.getElementById("iosPrintArea");
+  target.innerHTML=area.innerHTML;preview.dataset.filename=filename;preview.classList.remove("hidden");preview.setAttribute("aria-hidden","false");
+  document.documentElement.style.overflow="hidden";document.body.style.overflow="hidden";window.scrollTo(0,0);
+  requestAnimationFrame(()=>{fitIOSPreview();setPdfMsg('iPhone用の請求書プレビューを表示しました。請求書が見えていることを確認して「PDF保存・印刷」を押してください。','success');});
+}
+function closeIOSPreview(){
+  const preview=document.getElementById("iosPrintPreview");preview.classList.add("hidden");preview.setAttribute("aria-hidden","true");
+  document.documentElement.style.overflow="";document.body.style.overflow="";document.body.classList.remove("ios-printing");
+}
+function printIOSInvoice(){
+  const target=document.getElementById("iosPrintArea");if(!target||!target.querySelector(".invoice-page")){alert("請求書が表示されていません。いったん戻って、もう一度請求書を作成してください。");return;}
+  document.body.classList.add("ios-printing");
+  target.style.transform="none";target.style.marginBottom="0";
+  void target.offsetHeight;
+  window.print();
+}
+window.addEventListener("afterprint",()=>{document.body.classList.remove("ios-printing");if(!document.getElementById("iosPrintPreview").classList.contains("hidden"))fitIOSPreview();});
+window.addEventListener("resize",()=>{if(!document.getElementById("iosPrintPreview").classList.contains("hidden"))fitIOSPreview();});
 function openPrintInvoice(area,filename){
+  if(isIOSDevice()){showIOSPreview(area,filename);return;}
   const w=window.open('', '_blank');
   if(!w){
     setPdfMsg('印刷画面を開けませんでした。ブラウザのポップアップを許可して、もう一度お試しください。');
