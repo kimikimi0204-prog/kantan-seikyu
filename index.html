@@ -49,9 +49,17 @@ header{position:sticky;top:0;z-index:5;background:#111827;color:#fff;padding:14p
   <div class="ios-preview-toolbar">
     <div class="ios-preview-toolbar-inner">
       <strong>iPhone用 請求書プレビュー</strong>
-      <p>下に請求書が見えていることを確認してから「PDF保存・印刷」を押してください。印刷画面では共有ボタンから「ファイルに保存」もできます。</p>
+      <p><b>Safariの共有ボタンは押さないでください。</b><br>下の青い「① 印刷画面を開く」を押します。</p>
+      <div style="background:#fff7d6;border:1px solid #e5c45b;border-radius:10px;padding:10px;margin:8px 0;font-size:14px;line-height:1.7">
+        <b>iPhoneでPDF保存する手順</b><br>
+        ① 下の青いボタンを押す<br>
+        ② 「プリント」画面が出たら、下に見える請求書のプレビューをタップ（または2本指で広げる）<br>
+        ③ 請求書が大きく表示されたら、そこで「共有 □↑」を押す<br>
+        ④ 「“ファイル”に保存」→「保存」<br>
+        ※ 最初のSafari画面の共有は「リンクを送信」になるので使いません。
+      </div>
       <div class="ios-preview-actions">
-        <button type="button" class="ios-print-btn" onclick="printIOSInvoice()">PDF保存・印刷</button>
+        <button type="button" class="ios-print-btn" onclick="printIOSInvoice()">① 印刷画面を開く</button>
         <button type="button" class="ios-close-btn" onclick="closeIOSPreview()">戻る</button>
       </div>
     </div>
@@ -85,7 +93,7 @@ function showIOSPreview(area,filename){
   const preview=document.getElementById("iosPrintPreview"),target=document.getElementById("iosPrintArea");
   target.innerHTML=area.innerHTML;preview.dataset.filename=filename;preview.classList.remove("hidden");preview.setAttribute("aria-hidden","false");
   document.documentElement.style.overflow="hidden";document.body.style.overflow="hidden";window.scrollTo(0,0);
-  requestAnimationFrame(()=>{fitIOSPreview();setPdfMsg('iPhone用の請求書プレビューを表示しました。請求書が見えていることを確認して「PDF保存・印刷」を押してください。','success');});
+  requestAnimationFrame(()=>{fitIOSPreview();setPdfMsg('iPhoneではSafariの共有ではなく、請求書プレビュー内の「① 印刷画面を開く」を押してください。','success');});
 }
 function closeIOSPreview(){
   const preview=document.getElementById("iosPrintPreview");preview.classList.add("hidden");preview.setAttribute("aria-hidden","true");
